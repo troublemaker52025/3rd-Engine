@@ -21,7 +21,7 @@
 #
 
 # Define target name
-set (TARGET_NAME Urho3D)
+set (TARGET_NAME 3rd-Engine)
 
 # Generate JSON compilation database format specification
 if (URHO3D_CLANG_TOOLS OR URHO3D_BINDINGS)

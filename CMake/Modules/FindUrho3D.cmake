@@ -55,7 +55,7 @@
 
 set (AUTO_DISCOVER_VARS URHO3D_OPENGL URHO3D_D3D11 URHO3D_SSE URHO3D_DATABASE_ODBC URHO3D_DATABASE_SQLITE URHO3D_LUAJIT URHO3D_TESTING URHO3D_STATIC_RUNTIME)
 set (PATH_SUFFIX Urho3D)
-if (CMAKE_PROJECT_NAME STREQUAL Urho3D AND TARGET Urho3D)
+if (CMAKE_PROJECT_NAME STREQUAL Urho3D AND TARGET 3rd-Engine)
     # A special case where library location is already known to be in the build tree of Urho3D project
     set (URHO3D_HOME ${CMAKE_BINARY_DIR})
     set (URHO3D_INCLUDE_DIRS ${URHO3D_HOME}/include ${URHO3D_HOME}/include/Urho3D/ThirdParty)
@@ -68,7 +68,7 @@ if (CMAKE_PROJECT_NAME STREQUAL Urho3D AND TARGET Urho3D)
         # ditto for Lua/LuaJIT
         list (APPEND URHO3D_INCLUDE_DIRS ${URHO3D_HOME}/include/Urho3D/ThirdParty/Lua${JIT})
     endif ()
-    set (URHO3D_LIBRARIES Urho3D)
+    set (URHO3D_LIBRARIES 3rd-Engine)
     set (FOUND_MESSAGE "Found Urho3D: as CMake target")
     set (URHO3D_COMPILE_RESULT TRUE)
 else ()

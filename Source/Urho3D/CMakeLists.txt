@@ -210,7 +210,7 @@ if (URHO3D_LUA)
         add_make_clean_files (${CMAKE_BINARY_DIR}/bin/tool/tolua++)
     else ()
         # Otherwise, build it internally as per normal
-        add_subdirectory (../ThirdParty/toluapp/src/bin ../ThirdParty/toluapp/src/bin)
+        # add_subdirectory (../ThirdParty/toluapp/src/bin ../ThirdParty/toluapp/src/bin)
     endif ()
     # Use the host tool to generate source files for tolua++ API binding
     file (MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/LuaScript/generated)

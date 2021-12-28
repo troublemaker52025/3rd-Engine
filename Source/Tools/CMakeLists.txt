@@ -33,7 +33,7 @@ include_directories (${URHO3D_INCLUDE_DIRS})
 # In a production environment, however, the request parameters parsing has to be done by the application itself one way or another
 if (URHO3D_ANGELSCRIPT OR URHO3D_LUA${JIT})
     # Add Urho3DPlayer as target only when one of the supported scripting subystems is enabled
-    add_subdirectory (Urho3DPlayer)
+    # add_subdirectory (Urho3DPlayer)
 endif ()
 
 # Build PackageTool using host compiler toolchain
@@ -60,16 +60,16 @@ if (CMAKE_CROSSCOMPILING AND URHO3D_PACKAGING)
 endif ()
 
 if (URHO3D_TOOLS)
-    # Urho3D tools
-    add_subdirectory (AssetImporter)
-    add_subdirectory (OgreImporter)
-    add_subdirectory (PackageTool)
-    add_subdirectory (RampGenerator)
-    add_subdirectory (SpritePacker)
-    if (URHO3D_ANGELSCRIPT)
-        add_subdirectory (ScriptCompiler)
-    endif ()
-elseif (NOT CMAKE_CROSSCOMPILING AND URHO3D_PACKAGING)
-    # PackageTool target is required but we are not cross-compiling, so build it as per normal
-    add_subdirectory (PackageTool)
+#     # Urho3D tools
+#     add_subdirectory (AssetImporter)
+#     add_subdirectory (OgreImporter)
+#     add_subdirectory (PackageTool)
+#     add_subdirectory (RampGenerator)
+#     add_subdirectory (SpritePacker)
+#     if (URHO3D_ANGELSCRIPT)
+#         add_subdirectory (ScriptCompiler)
+#     endif ()
+# elseif (NOT CMAKE_CROSSCOMPILING AND URHO3D_PACKAGING)
+#     # PackageTool target is required but we are not cross-compiling, so build it as per normal
+#     add_subdirectory (PackageTool)
 endif ()

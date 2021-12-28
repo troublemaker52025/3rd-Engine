@@ -1,5 +1,5 @@
 #
-# Copyright (c) 2008-2017 the Urho3D project.
+# Copyright (c) 2008-2021 the Urho3D project.
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -27,26 +27,14 @@ if (CMAKE_PROJECT_NAME STREQUAL Urho3D)
     # All Clang-tools must be natively built and output to bin/tool/clang subdir to differentiate them from the rest
     set_output_directories (${CMAKE_BINARY_DIR}/bin/tool/clang RUNTIME PDB)
 else ()
-    # Set CMake minimum version and CMake policy required by UrhoCommon module
-    cmake_minimum_required (VERSION 3.2.3)
-    if (COMMAND cmake_policy)
-        # Libraries linked via full path no longer produce linker search paths
-        cmake_policy (SET CMP0003 NEW)
-        # INTERFACE_LINK_LIBRARIES defines the link interface
-        cmake_policy (SET CMP0022 NEW)
-        # Disallow use of the LOCATION target property - so we set to OLD as we still need it
-        # cmake_policy (SET CMP0026 OLD)
-        # MACOSX_RPATH is enabled by default
-        cmake_policy (SET CMP0042 NEW)
-        # Honor the visibility properties for SHARED target types only
-        # cmake_policy (SET CMP0063 OLD)
-    endif ()
+    # Set CMake minimum version
+    cmake_minimum_required (VERSION 3.10.2)
 
     # Set project name
     project (Urho3D-ExternalProject-${URHO3D_CLANG_TOOLS})
 
     # Set CMake modules search path
-    set (CMAKE_MODULE_PATH ${BAKED_CMAKE_SOURCE_DIR}/CMake/Modules)
+    set (CMAKE_MODULE_PATH ${BAKED_CMAKE_SOURCE_DIR}/cmake/Modules)
 
     # Include UrhoCommon.cmake module after setting project name
     include (UrhoCommon)
@@ -55,7 +43,7 @@ else ()
     file (MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/${DEST_INCLUDE_DIR}/ThirdParty)
 endif ()
 
-# LLVM/Clang is assumed to be installed in a system-wide location when not explicitily defined using env-var
+# LLVM/Clang is assumed to be installed in a system-wide location when not explicitly defined using env-var
 if (DEFINED ENV{LLVM_CLANG_ROOT})
     set (CMAKE_SYSROOT $ENV{LLVM_CLANG_ROOT})
 endif ()

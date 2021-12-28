@@ -12,9 +12,16 @@
 /lib*/
 generated/
 /Source/Urho3D/tolua++-prefix/
+build/
+/captures/
+.cxx/
+/demo/
 
 # Output files
 /Source/**/*.a
+/Source/ThirdParty/Assimp/revision.h
+/Source/ThirdParty/Assimp/contrib/zlib/zconf.h
+/Source/ThirdParty/Assimp/include/assimp/config.h
 /Source/ThirdParty/LuaJIT/src/host/buildvm
 /Source/ThirdParty/LuaJIT/src/host/buildvm_arch.h
 /Source/ThirdParty/LuaJIT/src/host/minilua
@@ -39,6 +46,10 @@ generated/
 /Docs/html/
 /Docs/qch/
 
+# Saved sample scenes
+/bin/Data/Scenes/Isometric2D.xml
+/bin/Data/Scenes/Platformer2D.xml
+
 # Eclipse project settings
 /.*project
 /.settings
@@ -52,6 +63,7 @@ generated/
 # JetBrains IDE project settings
 /.idea/
 /cmake-build-*/
+*.iml
 
 # Code::Blocks project settings
 /*.cbp
@@ -60,13 +72,16 @@ generated/
 /*.project
 /*.workspace
 
-# Android project settings
-/Android/local.properties
+# Gradle project settings
+.gradle
 
-# Android output directories
-/Android/Urho3D/
-/Android/ThirdParty/
-/Android/libs/
+# Android project settings
+/local.properties
+
+# Visual Studio project settings
+/.vs/
+/CMakeSettings.json
+/out/
 
 # CMake generated build files
 CMakeCache.txt
@@ -81,6 +96,7 @@ CTestTestfile.cmake
 /Source/**/*.cmake
 !/Source/ThirdParty/SDL/cmake/*.cmake
 !/Source/ThirdParty/SDL/include/*cmake
+!/Source/ThirdParty/Assimp/cmake-modules/*cmake
 /Docs/**/*.cmake
 
 # Precompiled header files
@@ -102,4 +118,6 @@ configure*
 Thumbs.db
 .directory
 
-/build/*
+# Doxygen mess from absence of 'dot' dependency
+CMakeDoxyFile.in
+CMakeDoxygenDefaults.cmake

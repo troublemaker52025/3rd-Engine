@@ -1,5 +1,5 @@
 #
-# Copyright (c) 2008-2017 the Urho3D project.
+# Copyright (c) 2008-2021 the Urho3D project.
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -20,26 +20,16 @@
 # THE SOFTWARE.
 #
 
-# Set CMake minimum version and CMake policy required by UrhoCommon module
-cmake_minimum_required (VERSION 3.2.3)
-if (COMMAND cmake_policy)
-    # Libraries linked via full path no longer produce linker search paths
-    cmake_policy (SET CMP0003 NEW)
-    # INTERFACE_LINK_LIBRARIES defines the link interface
-    cmake_policy (SET CMP0022 NEW)
-    # Disallow use of the LOCATION target property - so we set to OLD as we still need it
-    # cmake_policy (SET CMP0026 OLD)
-    # MACOSX_RPATH is enabled by default
-    cmake_policy (SET CMP0042 NEW)
-    # Honor the visibility properties for SHARED target types only
-    # cmake_policy (SET CMP0063 OLD)
-endif ()
+# Set CMake minimum version
+cmake_minimum_required (VERSION 3.10.2)
+
+set_property( GLOBAL PROPERTY USE_FOLDERS ON)
 
 # Set project name
 project (Urho3D)
 
 # Set CMake modules search path
-set (CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/CMake/Modules)
+set (CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake/Modules)
 
 # Include UrhoCommon.cmake module after setting project name
 include (UrhoCommon)
@@ -50,14 +40,14 @@ if (WIN32)
     set (SCRIPT_EXT .bat)
     if (CMAKE_HOST_WIN32)
         set (PATH_SUFFIX .)
+        if (URHO3D_64BIT AND CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
+            string (REPLACE " (x86)" "" CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
+        endif ()
     endif ()
 else ()
     set (SCRIPT_EXT .sh)
 endif ()
-if (ANDROID)
-    # For Android platform, install to a path based on the chosen Android ABI, e.g. libs/armeabi-v7a
-    set (LIB_SUFFIX s/${ANDROID_NDK_ABI_NAME})
-elseif (URHO3D_64BIT)
+if (URHO3D_64BIT)
     # Install to 'lib64' when one of these conditions is true
     if ((MINGW AND CMAKE_CROSSCOMPILING) OR URHO3D_USE_LIB64_RPM OR (HAS_LIB64 AND NOT URHO3D_USE_LIB_DEB))
         set (LIB_SUFFIX 64)
@@ -73,10 +63,11 @@ set (DEST_PKGCONFIG_DIR lib${LIB_SUFFIX}/pkgconfig)
 file (GLOB APP_SCRIPTS ${CMAKE_SOURCE_DIR}/bin/*${SCRIPT_EXT})
 install (PROGRAMS ${APP_SCRIPTS} DESTINATION ${DEST_RUNTIME_DIR})   # DEST_RUNTIME_DIR variable is set by the set_output_directories() macro call in the UrhoCommon module
 # Install CMake modules and toolchains provided by and for Urho3D
-install (DIRECTORY ${CMAKE_SOURCE_DIR}/CMake/ DESTINATION ${DEST_SHARE_DIR}/CMake)    # Note: the trailing slash is significant
-# Install CMake build scripts
-file (GLOB CMAKE_SCRIPTS ${CMAKE_SOURCE_DIR}/*${SCRIPT_EXT})
-install (PROGRAMS ${CMAKE_SCRIPTS} DESTINATION ${DEST_SHARE_DIR}/Scripts)
+install (DIRECTORY ${CMAKE_SOURCE_DIR}/cmake/ DESTINATION ${DEST_SHARE_DIR}/cmake)    # Note: the trailing slash is significant
+# Install CMake build scripts and rakefile
+file (GLOB CMAKE_SCRIPTS ${CMAKE_SOURCE_DIR}/script/*${SCRIPT_EXT})
+install (PROGRAMS ${CMAKE_SCRIPTS} DESTINATION ${DEST_SHARE_DIR}/scripts)
+install (FILES rakefile DESTINATION ${DEST_SHARE_DIR})
 
 # Setup package variables
 set (URHO3D_DESCRIPTION "Urho3D is a free lightweight, cross-platform 2D and 3D game engine implemented in C++ and released under the MIT license. Greatly inspired by OGRE (http://www.ogre3d.org) and Horde3D (http://www.horde3d.org).")
@@ -84,7 +75,7 @@ set (CPACK_PACKAGE_DESCRIPTION_SUMMARY ${URHO3D_DESCRIPTION})
 set (URHO3D_URL "https://github.com/urho3d/Urho3D")
 set (CPACK_PACKAGE_VENDOR ${URHO3D_URL})
 set (CPACK_PACKAGE_CONTACT ${URHO3D_URL})
-execute_process (COMMAND ${CMAKE_COMMAND} -P ${CMAKE_SOURCE_DIR}/CMake/Modules/GetUrhoRevision.cmake WORKING_DIRECTORY ${CMAKE_SOURCE_DIR} OUTPUT_VARIABLE URHO3D_VERSION OUTPUT_STRIP_TRAILING_WHITESPACE)
+execute_process (COMMAND ${CMAKE_COMMAND} -P ${CMAKE_SOURCE_DIR}/cmake/Modules/GetUrhoRevision.cmake WORKING_DIRECTORY ${CMAKE_SOURCE_DIR} OUTPUT_VARIABLE URHO3D_VERSION OUTPUT_STRIP_TRAILING_WHITESPACE)
 set (CPACK_PACKAGE_VERSION ${URHO3D_VERSION})
 string (REGEX MATCH "([^.]+)\\.([^.]+)\\.(.+)" MATCHED ${URHO3D_VERSION})
 if (MATCHED)
@@ -107,7 +98,9 @@ elseif (WIN32)
     if (MINGW)
         set (CPACK_SYSTEM_NAME MinGW)   # MinGW implies Windows platform
     endif ()
-    set (CPACK_GENERATOR ZIP)
+    if (CMAKE_HOST_WIN32)
+        set (CPACK_GENERATOR ZIP)       # Differentiate artifacts generated from Windows host system
+    endif ()
 elseif (WEB)
     set (CPACK_SYSTEM_NAME Web)
 elseif (CPACK_SYSTEM_NAME STREQUAL Linux)
@@ -125,21 +118,22 @@ elseif (CPACK_SYSTEM_NAME STREQUAL Linux)
         set (CPACK_DEBIAN_PACKAGE_ARCHITECTURE i386)
         set (CPACK_RPM_PACKAGE_ARCHITECTURE i686)       # The 'package' target should be built with the help of 'setarch i686' command on a 64-bit host system
     endif ()
-    if (NOT URHO3D_64BIT OR HAS_LIB64)
-        list (APPEND CPACK_GENERATOR RPM)
-    endif ()
-    if (NOT URHO3D_64BIT OR NOT HAS_LIB64)
-        list (APPEND CPACK_GENERATOR DEB)
-    endif ()
-    if (URHO3D_64BIT)
-        if (URHO3D_USE_LIB64_RPM AND NOT HAS_LIB64)
-            set (CPACK_GENERATOR RPM)
-        elseif (URHO3D_USE_LIB_DEB AND HAS_LIB64)
-            set (CPACK_GENERATOR DEB)
+    # TODO: Temporary disable RPM and DEB package generation for CI as it has run out of disk space for a few of the target platforms.
+    if (NOT DEFINED ENV{CI})
+        if (NOT URHO3D_64BIT OR HAS_LIB64)
+            list (APPEND CPACK_GENERATOR RPM)
+        endif ()
+        if (NOT URHO3D_64BIT OR NOT HAS_LIB64)
+            list (APPEND CPACK_GENERATOR DEB)
+        endif ()
+        if (URHO3D_64BIT)
+            if (URHO3D_USE_LIB64_RPM AND NOT HAS_LIB64)
+                set (CPACK_GENERATOR RPM)
+            elseif (URHO3D_USE_LIB_DEB AND HAS_LIB64)
+                set (CPACK_GENERATOR DEB)
+            endif ()
         endif ()
     endif ()
-    # Note to package maintainer: comment out below line to revert the prefix from '/usr/local' (default for CMAKE_INSTALL_PREFIX) to '/usr' (default for CPACK_PACKAGING_INSTALL_PREFIX)
-    set (CPACK_PACKAGING_INSTALL_PREFIX ${CMAKE_INSTALL_PREFIX})
 endif ()
 if (URHO3D_64BIT)
     set (CPACK_SYSTEM_NAME ${CPACK_SYSTEM_NAME}-64bit)
@@ -151,8 +145,8 @@ if (WIN32 AND NOT URHO3D_OPENGL)
     else ()
         set (CPACK_SYSTEM_NAME ${CPACK_SYSTEM_NAME}-3D9)
     endif ()
-elseif (ANDROID AND X86)    # Take advantage of Android toolchain setting X86 variable to true for both 'x86' and 'x86_64' ABIs
-    set (CPACK_SYSTEM_NAME ${CPACK_SYSTEM_NAME}-IA)     # Stands for Intel Architecture
+elseif (ANDROID)
+    set (CPACK_SYSTEM_NAME ${CPACK_SYSTEM_NAME}-${ANDROID_ABI})
 elseif (RPI AND RPI_ABI MATCHES ^armeabi-v7a)
     set (CPACK_SYSTEM_NAME ${CPACK_SYSTEM_NAME}-v7a)
 elseif (ARM_ABI_FLAGS)
@@ -160,8 +154,6 @@ elseif (ARM_ABI_FLAGS)
     string (REGEX REPLACE .*- - CPU_NAME "${CPU_NAME}")
     string (TOUPPER "${CPU_NAME}" CPU_NAME)
     set (CPACK_SYSTEM_NAME ${CPACK_SYSTEM_NAME}${CPU_NAME})
-elseif (EMSCRIPTEN_WASM)
-    set (CPACK_SYSTEM_NAME ${CPACK_SYSTEM_NAME}-WASM)
 endif ()
 if (NOT DEFINED ENV{RELEASE_TAG})
     set (CPACK_SYSTEM_NAME ${CPACK_SYSTEM_NAME}-snapshot)
@@ -183,12 +175,13 @@ if (URHO3D_MACOSX_BUNDLE OR (APPLE AND ARM))
         set (MACOSX_BUNDLE_SHORT_VERSION_STRING ${URHO3D_VERSION})
     endif ()
     if (NOT MACOSX_BUNDLE_COPYRIGHT)
-        set (MACOSX_BUNDLE_COPYRIGHT "Copyright (c) 2008-2017 the Urho3D project.")
+        set (MACOSX_BUNDLE_COPYRIGHT "Copyright (c) 2008-2021 the Urho3D project.")
     endif ()
 endif ()
 
 # Setup SDK-like include dir in the build tree for building the Urho3D library
-file (MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/${DEST_INCLUDE_DIR}/ThirdParty)
+set (THIRD_PARTY_INCLUDE_DIR ${CMAKE_BINARY_DIR}/${DEST_INCLUDE_DIR}/ThirdParty)
+file (MAKE_DIRECTORY ${THIRD_PARTY_INCLUDE_DIR})
 
 # Urho3D source
 add_subdirectory (Source)

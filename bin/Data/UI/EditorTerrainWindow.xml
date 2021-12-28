@@ -18,6 +18,21 @@
             <attribute name="Text" value="Terrain Editor" />
             <attribute name="Auto Localizable" value="false" />
         </element>
+        <element type="Button">
+            <attribute name="Name" value="ResetButton" />
+            <attribute name="Min Size" value="16 16" />
+            <attribute name="Max Size" value="16 16" />
+            <attribute name="Pivot" value="0 0" />
+            <attribute name="Layout Mode" value="Horizontal" />
+            <attribute name="Image Rect" value="16 0 32 16" />
+            <attribute name="Border" value="4 4 4 4" />
+            <attribute name="Hover Image Offset" value="0 16" />
+            <attribute name="Pressed Image Offset" value="16 0" />
+            <attribute name="Pressed Child Offset" value="-1 1" />
+            <element type="BorderImage">
+                <attribute name="Image Rect" value="128 32 144 48" />
+            </element>
+        </element>
         <element type="Button" style="CloseButton">
             <attribute name="Name" value="CloseButton" />
         </element>
@@ -66,7 +81,7 @@
         <attribute name="Layout Mode" value="Horizontal" />
         <attribute name="Min Size" value="0 34" />
         <attribute name="Max Size" value="999999 34" />
-        <element type="Checkbox" style="TerrainEditorCheckbox">
+        <element type="CheckBox" style="TerrainEditorCheckBox">
             <attribute name="Name" value="RaiseLowerHeight" />
             <element type="BorderImage">
                 <attribute name="Texture" value="Texture2D;Textures/Editor/EditorIcons.png" />
@@ -76,7 +91,7 @@
                 <attribute name="Max Size" value="30 30" />
             </element>
         </element>
-        <element type="Checkbox" style="TerrainEditorCheckbox">
+        <element type="CheckBox" style="TerrainEditorCheckBox">
             <attribute name="Name" value="SetHeight"/>
             <element type="BorderImage">
                 <attribute name="Texture" value="Texture2D;Textures/Editor/EditorIcons.png" />
@@ -86,7 +101,7 @@
                 <attribute name="Max Size" value="30 30" />
             </element>
         </element>
-        <element type="Checkbox" style="TerrainEditorCheckbox">
+        <element type="CheckBox" style="TerrainEditorCheckBox">
             <attribute name="Name" value="SmoothHeight" />
             <element type="BorderImage">
                 <attribute name="Texture" value="Texture2D;Textures/Editor/EditorIcons.png" />
@@ -97,7 +112,7 @@
             </element>
         </element>
         <!-- Disable these for now -->
-        <!--<element type="Checkbox" style="TerrainEditorCheckbox">
+        <!--<element type="CheckBox" style="TerrainEditorCheckBox">
             <attribute name="Name" value="PaintBrush" />
             <element type="BorderImage">
                 <attribute name="Texture" value="Texture2D;Textures/Editor/EditorIcons.png" />
@@ -107,7 +122,7 @@
                 <attribute name="Max Size" value="30 30" />
             </element>
         </element>
-        <element type="Checkbox" style="TerrainEditorCheckbox">
+        <element type="CheckBox" style="TerrainEditorCheckBox">
             <attribute name="Name" value="PaintTrees" />
             <element type="BorderImage">
                 <attribute name="Texture" value="Texture2D;Textures/Editor/EditorIcons.png" />
@@ -117,7 +132,7 @@
                 <attribute name="Max Size" value="30 30" />
             </element>
         </element>
-        <element type="Checkbox" style="TerrainEditorCheckbox">
+        <element type="CheckBox" style="TerrainEditorCheckBox">
             <attribute name="Name" value="PaintFoliage" />
             <element type="BorderImage">
                 <attribute name="Texture" value="Texture2D;Textures/Editor/EditorIcons.png" />

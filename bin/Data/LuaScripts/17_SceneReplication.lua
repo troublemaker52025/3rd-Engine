@@ -168,7 +168,7 @@ function SubscribeToEvents()
     -- This is a custom event, sent from the server to the client. It tells the node ID of the object the client should control
     SubscribeToEvent("ClientObjectID", "HandleClientObjectID")
     -- Events sent between client & server (remote events) must be explicitly registered or else they are not allowed to be received
-    network:RegisterRemoteEvent("ClientObjectID");
+    network:RegisterRemoteEvent("ClientObjectID")
 end
 
 function CreateButton(text, width)
@@ -384,7 +384,7 @@ function HandleClientConnected(eventType, eventData)
 
     -- Finally send the object's node ID using a remote event
     local remoteEventData = VariantMap()
-    remoteEventData:SetInt("ID", newObject.ID)
+    remoteEventData["ID"] = newObject.ID
     newConnection:SendRemoteEvent("ClientObjectID", true, remoteEventData)
 end
 

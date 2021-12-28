@@ -68,7 +68,7 @@ UIElement@ SetValue(CheckBox@ element, bool value, bool sameValue)
 
 UIElement@ SetValue(DropDownList@ element, int value, bool sameValue)
 {
-    element.selection = sameValue ? value : M_MAX_UNSIGNED;
+    element.selection = sameValue ? uint(value) : M_MAX_UNSIGNED;
     return element;
 }
 
@@ -314,7 +314,7 @@ UIElement@ CreateIntAttributeEditor(ListView@ list, Array<Serializable@>@ serial
         LineEdit@ attrEdit = CreateAttributeLineEdit(parent, serializables, index, subIndex);
         CreateDragSlider(attrEdit);
         // If the attribute is a counter for things like billboards or animation states, disable apply at each change
-        if (info.name.Find(" Count", 0, false) == NPOS)
+        if (info.name.Find(" Count", 0, false) == String::NPOS)
             SubscribeToEvent(attrEdit, "TextChanged", "EditAttribute");
         SubscribeToEvent(attrEdit, "TextFinished", "EditAttribute");
         // If the attribute is a node ID, make it a drag/drop target
@@ -1200,7 +1200,8 @@ ResourcePicker@ GetResourcePicker(StringHash resourceType)
 {
     for (uint i = 0; i < resourcePickers.length; ++i)
     {
-        if (resourcePickers[i].type == resourceType)
+        // TODO: refactor to use dictionary instead
+        if (resourceType == resourcePickers[i].type)
             return resourcePickers[i];
     }
     return null;
@@ -1516,9 +1517,9 @@ void InitVectorStructs()
             for (uint attributeIndex = 0; attributeIndex < attributes.length; attributeIndex++)
             {
                 AttributeInfo attribute = attributes[attributeIndex];
-                if (attribute.type == VAR_VARIANTVECTOR and attribute.variantStructureElementNames.length > 0)
+                if (attribute.type == VAR_VARIANTVECTOR and attribute.metadata.Contains("VectorStructElements"))
                 {
-                    Array<String> elementsNames = attribute.variantStructureElementNames;
+                    Array<String>@ elementsNames = attribute.metadata["VectorStructElements"].GetStringVector();
                     vectorStructs.Push(VectorStruct(objectName, attribute.name, elementsNames, 1));
                 }
             }

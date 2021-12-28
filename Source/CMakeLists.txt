@@ -139,7 +139,7 @@ endif ()
 #     endif ()
 # endif ()
 
-add_subdirectory (Urho3D)
+add_subdirectory (3rd-Engine)
 
 if (URHO3D_CLANG_TOOLS)
     add_subdirectory (Clang-Tools)

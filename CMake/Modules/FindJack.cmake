@@ -1,5 +1,5 @@
 #
-# Copyright (c) 2008-2017 the Urho3D project.
+# Copyright (c) 2008-2021 the Urho3D project.
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -20,16 +20,17 @@
 # THE SOFTWARE.
 #
 
-# Post process to glue the main module and side module(s) together
+# Find Jack Audio Connection Kit development library
+#
+#  JACK_FOUND
+#  JACK_INCLUDE_DIRS
+#  JACK_LIBRARIES
+#
 
-string (REPLACE " " .js',' SIDE_MODULES "'${SIDE_MODULES}.js'")              # Stringify for string replacement
-if (HAS_SHELL_FILE)
-    file (READ ${TARGET_FILE} CONTENT)
-    string (REPLACE ${TARGET_NAME}.js libUrho3D.js CONTENT "${CONTENT}")     # Stringify to preserve semicolons
-    # Assume HTML shell-file has Module object without the 'dynamicLibraries' prop defined yet
-    string (REGEX REPLACE "(var Module *= *{)" \\1dynamicLibraries:[${SIDE_MODULES}], CONTENT "${CONTENT}")
-    file (WRITE ${TARGET_FILE} "${CONTENT}")
-else ()
-    file (READ ${TARGET_DIR}/libUrho3D.js CONTENT)
-    file (WRITE ${TARGET_DIR}/${TARGET_NAME}.main.js "var Module={dynamicLibraries:[${SIDE_MODULES}]};${CONTENT}")
-endif ()
+find_path (JACK_INCLUDE_DIRS NAMES jack/jack.h DOC "JACK include directory")
+find_library (JACK_LIBRARIES NAMES jack DOC "JACK library")
+
+include (FindPackageHandleStandardArgs)
+find_package_handle_standard_args (Jack REQUIRED_VARS JACK_LIBRARIES JACK_INCLUDE_DIRS FAIL_MESSAGE "Could NOT find Jack Audio Connection Kit development library")
+
+mark_as_advanced (JACK_INCLUDE_DIRS JACK_LIBRARIES)

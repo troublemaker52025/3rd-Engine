@@ -1,5 +1,5 @@
 #
-# Copyright (c) 2008-2017 the Urho3D project.
+# Copyright (c) 2008-2021 the Urho3D project.
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -20,27 +20,17 @@
 # THE SOFTWARE.
 #
 
-# Find Mir display server
+# Find Direct Rendering Manager development library
 #
-#  MIR_FOUND
-#  MIR_INCLUDE_DIRS
-#  MIR_CLIENT
-#  MIR_COMMON
-#  EGL
-#  XKB
+#  DRM_FOUND
+#  DRM_INCLUDE_DIRS
+#  DRM_LIBRARIES
 #
 
-find_path (MIR_CLIENT_INCLUDE_DIR NAMES mir_toolkit/mir_client_library.h PATH_SUFFIXES mirclient DOC "Mir client include directory")
-find_path (MIR_COMMON_INCLUDE_DIR NAMES mir_toolkit/common.h PATH_SUFFIXES mircommon DOC "Mir common include directory")
-find_library (MIR_CLIENT NAMES mirclient DOC "Mir client library")
-find_library (MIR_COMMON NAMES mircommon DOC "Mir common library")
-find_library (EGL NAMES EGL DOC "EGL library")
-find_library (XKB NAMES xkbcommon DOC "Xkb common library")
+find_path (DRM_INCLUDE_DIRS NAMES drm.h PATH_SUFFIXES libdrm DOC "DirectRenderingManager include directory")
+find_library (DRM_LIBRARIES NAMES drm DOC "DirectRenderingManager library")
 
 include (FindPackageHandleStandardArgs)
-find_package_handle_standard_args (Mir REQUIRED_VARS MIR_CLIENT MIR_COMMON EGL XKB MIR_CLIENT_INCLUDE_DIR MIR_COMMON_INCLUDE_DIR FAIL_MESSAGE "Could NOT find Mir display server")
-if (MIR_FOUND)
-    set (MIR_INCLUDE_DIRS ${MIR_CLIENT_INCLUDE_DIR} ${MIR_COMMON_INCLUDE_DIR})
-endif ()
+find_package_handle_standard_args (DRM REQUIRED_VARS DRM_LIBRARIES DRM_INCLUDE_DIRS FAIL_MESSAGE "Could NOT find Direct Rendering Manager development library")
 
-mark_as_advanced (MIR_CLIENT_INCLUDE_DIR MIR_COMMON_INCLUDE_DIR MIR_CLIENT MIR_COMMON EGL XKB)
+mark_as_advanced (DRM_INCLUDE_DIRS DRM_LIBRARIES)

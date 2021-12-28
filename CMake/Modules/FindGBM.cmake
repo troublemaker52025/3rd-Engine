@@ -20,17 +20,17 @@
 # THE SOFTWARE.
 #
 
-# Find Esound development library
+# Find Generic Buffer Management development library
 #
-#  ESOUND_FOUND
-#  ESOUND_INCLUDE_DIRS
-#  ESOUND_LIBRARIES
+#  GBM_FOUND
+#  GBM_INCLUDE_DIRS
+#  GBM_LIBRARIES
 #
 
-find_path (ESOUND_INCLUDE_DIRS NAMES esd.h DOC "Esound include directory")
-find_library (ESOUND_LIBRARIES NAMES esd DOC "Esound library")
+find_path (GBM_INCLUDE_DIRS NAMES gbm.h DOC "GenericBufferManagement include directory")
+find_library (GBM_LIBRARIES NAMES gbm DOC "GenericBufferManagement library")
 
 include (FindPackageHandleStandardArgs)
-find_package_handle_standard_args (Esound REQUIRED_VARS ESOUND_LIBRARIES ESOUND_INCLUDE_DIRS FAIL_MESSAGE "Could NOT find Esound development library")
+find_package_handle_standard_args (GBM REQUIRED_VARS GBM_LIBRARIES GBM_INCLUDE_DIRS FAIL_MESSAGE "Could NOT find Direct Generic Buffer Management development library")
 
-mark_as_advanced (ESOUND_INCLUDE_DIRS ESOUND_LIBRARIES)
+mark_as_advanced (GBM_INCLUDE_DIRS GBM_LIBRARIES)

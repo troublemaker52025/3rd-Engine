@@ -1,5 +1,5 @@
 #
-# Copyright (c) 2008-2017 the Urho3D project.
+# Copyright (c) 2008-2021 the Urho3D project.
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -20,17 +20,17 @@
 # THE SOFTWARE.
 #
 
-# Find RoarAudio development library
+# Find Secret Rabbit Code development library
 #
-#  SNDIO_FOUND
-#  SNDIO_INCLUDE_DIRS
-#  SNDIO_LIBRARIES
+#  SECRETRABBITCODE_FOUND
+#  SECRETRABBITCODE_INCLUDE_DIRS
+#  SECRETRABBITCODE_LIBRARIES
 #
 
-find_path (SNDIO_INCLUDE_DIRS NAMES RoarAudio.h DOC "RoarAudio include directory")
-find_library (SNDIO_LIBRARIES NAMES RoarAudio DOC "RoarAudio library")
+find_path (SECRETRABBITCODE_INCLUDE_DIRS NAMES samplerate.h DOC "SecretRabbitCode include directory")
+find_library (SECRETRABBITCODE_LIBRARIES NAMES samplerate DOC "SecretRabbitCode library")
 
 include (FindPackageHandleStandardArgs)
-find_package_handle_standard_args (RoarAudio REQUIRED_VARS SNDIO_LIBRARIES SNDIO_INCLUDE_DIRS FAIL_MESSAGE "Could NOT find RoarAudio development library")
+find_package_handle_standard_args (SecretRabbitCode REQUIRED_VARS SECRETRABBITCODE_LIBRARIES SECRETRABBITCODE_INCLUDE_DIRS FAIL_MESSAGE "Could NOT find Secret Rabbit Code (aka libsamplerate) development library")
 
-mark_as_advanced (SNDIO_INCLUDE_DIRS SNDIO_LIBRARIES)
+mark_as_advanced (SECRETRABBITCODE_INCLUDE_DIRS SECRETRABBITCODE_LIBRARIES)

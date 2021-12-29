@@ -140,7 +140,7 @@ if (NOT ANDROID AND NOT ARM AND NOT WEB)
 endif ()
 
 # 3rd-Engine game engine library
-add_subdirectory (3rd-Engine)
+add_subdirectory (Urho3D)
 
 if (URHO3D_CLANG_TOOLS)
     add_subdirectory (Clang-Tools)

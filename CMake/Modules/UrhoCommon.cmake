@@ -169,7 +169,7 @@ if (RPI)
     include_directories (SYSTEM ${VIDEOCORE_INCLUDE_DIRS})
     link_directories (${VIDEOCORE_LIBRARY_DIRS})
 endif ()
-if (CMAKE_PROJECT_NAME STREQUAL Urho3D)
+if (CMAKE_PROJECT_NAME STREQUAL 3rd-Engine)
     set (URHO3D_LIB_TYPE STATIC CACHE STRING "Specify Urho3D library type, possible values are STATIC (default) and SHARED (not available for Emscripten)")
     # Non-Windows platforms always use OpenGL, the URHO3D_OPENGL variable will always be forced to TRUE, i.e. it is not an option at all
     # Windows platform has URHO3D_OPENGL as an option, MSVC compiler default to FALSE (i.e. prefers Direct3D) while MinGW compiler default to TRUE
@@ -1357,7 +1357,7 @@ macro (find_Urho3D_tool VAR NAME)
     mark_as_advanced (${VAR})  # Hide it from cmake-gui in non-advanced mode
     if (NOT ${VAR})
         set (${VAR} ${CMAKE_BINARY_DIR}/bin/tool/${NAME})
-        if (ARG_MSG_MODE AND NOT CMAKE_PROJECT_NAME STREQUAL Urho3D)
+        if (ARG_MSG_MODE AND NOT CMAKE_PROJECT_NAME STREQUAL 3rd-Engine)
             message (${ARG_MSG_MODE}
                 "Could not find ${VAR} tool in the Urho3D build tree or Urho3D SDK. Your project may not build successfully without this tool. "
                 "You may have to first rebuild the Urho3D in its build tree or reinstall Urho3D SDK to get this tool built or installed properly. "
@@ -1592,15 +1592,15 @@ macro (setup_library)
     check_source_files ()
     add_library (${TARGET_NAME} ${ARG_UNPARSED_ARGUMENTS} ${SOURCE_FILES})
     get_target_property (LIB_TYPE ${TARGET_NAME} TYPE)
-    if (NOT ARG_NODEPS AND NOT PROJECT_NAME STREQUAL Urho3D)
-        define_dependency_libs (Urho3D)
+    if (NOT ARG_NODEPS AND NOT PROJECT_NAME STREQUAL 3rd-Engine)
+        define_dependency_libs (3rd-Engine)
     endif ()
     if (XCODE AND LUAJIT_SHARED_LINKER_FLAGS_APPLE AND LIB_TYPE STREQUAL SHARED_LIBRARY)
         list (APPEND TARGET_PROPERTIES XCODE_ATTRIBUTE_OTHER_LDFLAGS[arch=x86_64] "${LUAJIT_SHARED_LINKER_FLAGS_APPLE} $(OTHER_LDFLAGS)")    # Xcode universal build linker flags when targeting 64-bit OSX with LuaJIT enabled
     endif ()
     _setup_target ()
 
-    if (PROJECT_NAME STREQUAL Urho3D)
+    if (PROJECT_NAME STREQUAL 3rd-Engine)
         # Accumulate all the dependent static libraries that are used in building the Urho3D library itself
         if (NOT ${TARGET_NAME} STREQUAL Urho3D AND LIB_TYPE STREQUAL STATIC_LIBRARY)
             set (STATIC_LIBRARY_TARGETS ${STATIC_LIBRARY_TARGETS} ${TARGET_NAME} PARENT_SCOPE)
@@ -1692,7 +1692,7 @@ macro (setup_main_executable)
             find_Urho3d_tool (PACKAGE_TOOL PackageTool
                 HINTS ${CMAKE_BINARY_DIR}/bin/tool ${URHO3D_HOME}/bin/tool
                 DOC "Path to PackageTool" MSG_MODE WARNING)
-            if (CMAKE_PROJECT_NAME STREQUAL Urho3D)
+            if (CMAKE_PROJECT_NAME STREQUAL 3rd-Engine)
                 set (PACKAGING_DEP DEPENDS PackageTool)
             endif ()
             set (PACKAGING_COMMENT " and packaging")

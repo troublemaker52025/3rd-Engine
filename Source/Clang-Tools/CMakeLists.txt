@@ -20,9 +20,9 @@
 # THE SOFTWARE.
 #
 
-if (CMAKE_PROJECT_NAME STREQUAL Urho3D)
+if (CMAKE_PROJECT_NAME STREQUAL 3rd-Engine)
     # Set project name
-    project (Urho3D-Clang-Tools)
+    project (3rd-Engine-Clang-Tools)
 
     # All Clang-tools must be natively built and output to bin/tool/clang subdir to differentiate them from the rest
     set_output_directories (${CMAKE_BINARY_DIR}/bin/tool/clang RUNTIME PDB)

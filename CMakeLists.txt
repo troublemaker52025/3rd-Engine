@@ -26,7 +26,7 @@ cmake_minimum_required (VERSION 3.10.2)
 set_property( GLOBAL PROPERTY USE_FOLDERS ON)
 
 # Set project name
-project (Urho3D)
+project (3rd-Engine)
 
 # Set CMake modules search path
 set (CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake/Modules)

@@ -46,7 +46,7 @@ Urho3D uses the following third-party libraries:
 - Bullet 3.06+ (http://www.bulletphysics.org)
 - Civetweb 1.7 (https://github.com/civetweb/civetweb)
 - FreeType 2.8 (https://www.freetype.org)
-- GLEW 1.13.0 (http://glew.sourceforge.net)
+- GLEW 2.1.0 (<http://glew.sourceforge.net>)
 - SLikeNet (https://github.com/SLikeSoft/SLikeNet)
 - libcpuid 0.4.0+ (https://github.com/anrieff/libcpuid)
 - Lua 5.1 (https://www.lua.org)

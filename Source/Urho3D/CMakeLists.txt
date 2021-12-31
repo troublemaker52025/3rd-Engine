@@ -21,7 +21,7 @@
 #
 
 # Define target name
-set (TARGET_NAME Urho3D)
+set (TARGET_NAME 3rd-Engine-Core)
 
 # Prevent ICE from old MinGW versions, workaround from the GCC bugzilla https://gcc.gnu.org/bugzilla/show_bug.cgi?id=61189
 if (MINGW AND CMAKE_CXX_COMPILER_VERSION VERSION_LESS 4.9.1 AND NOT URHO3D_64BIT)

@@ -24,7 +24,7 @@
 cmake_minimum_required (VERSION 3.10.2)
 
 # Set project name
-project (Urho3D-Launcher)
+project (3rd-Engine-Launcher)
 
 # Set CMake modules search path
 set (CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/../../cmake/Modules)

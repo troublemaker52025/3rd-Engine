@@ -55,7 +55,7 @@ if (CMAKE_CROSSCOMPILING)
             ${ALTERNATE_COMMAND})
         add_make_clean_files (${CMAKE_BINARY_DIR}/bin/tool/PackageTool)
         if (CMAKE_HOST_WIN32 AND NOT HAS_MKLINK)
-            add_dependencies (PackageTool Urho3D)   # Ensure Urho3D headers are fresh when building PackageTool externally on Windows host system without MKLINK
+            add_dependencies (PackageTool 3rd-Engine-Core)   # Ensure Urho3D headers are fresh when building PackageTool externally on Windows host system without MKLINK
         endif ()
         install (PROGRAMS ${CMAKE_BINARY_DIR}/bin/tool/PackageTool DESTINATION ${DEST_RUNTIME_DIR}/tool)
     endif ()

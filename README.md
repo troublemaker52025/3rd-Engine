@@ -96,13 +96,13 @@ See section "Documentation build" below on how to automate documentation
 generation as part of the build process.
 
 The documentation is also available online at:
-  [here]<https://urho3d.io/documentation/HEAD/index.html>
+  [here](https://urho3d.io/documentation/HEAD/index.html)
 
 Documentation on how to build 3rd-Engine:
-  [here]<https://urho3d.io/documentation/HEAD/_building.html>
+  [here](https://urho3d.io/documentation/HEAD/_building.html)
 
 Documentation on how to use 3rd-Engine as external library:
-  [here]<https://urho3d.io/documentation/HEAD/_using_library.html>
+  [here](https://urho3d.io/documentation/HEAD/_using_library.html)
 
 Replace HEAD with a specific release version in the above links to obtain the
 documentation pertinent to the specified release. Alternatively, use the
@@ -111,4 +111,4 @@ document-switcher in the documentation website to do so.
 ## History
 
 The change history is available online at:
-  [here]<https://urho3d.io/documentation/HEAD/_history.html>
+  [here](https://urho3d.io/documentation/HEAD/_history.html)

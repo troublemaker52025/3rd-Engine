@@ -1,5 +1,5 @@
 //
-// Copyright (c) 2008-2021 the Urho3D project.
+// Copyright (c) 2021-2022 the 3rd-Engine project.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -22,7 +22,7 @@
 
 #pragma once
 
-namespace Urho3D
+namespace ThirdEngine
 {
 
 /// Returns an iterator pointing to the first element in the range [first, last] that is not less than value.
@@ -71,4 +71,4 @@ TRandomAccessIterator UpperBound(TRandomAccessIterator first, TRandomAccessItera
     return first;
 }
 
-} // namespace Urho3D
+} // namespace ThirdEngine

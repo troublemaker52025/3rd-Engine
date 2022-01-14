@@ -1,5 +1,5 @@
 //
-// Copyright (c) 2008-2021 the Urho3D project.
+// Copyright (c) 2021-2022 the 3rd-Engine project.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -28,7 +28,7 @@
 #include <Urho3D/Urho3D.h>
 #endif
 
-namespace Urho3D
+namespace ThirdEngine
 {
 
 /// Return git description of the HEAD when building the library.
@@ -37,4 +37,4 @@ URHO3D_API const char* GetRevision();
 /// Return baked-in compiler defines used when building the library.
 URHO3D_API const char* GetCompilerDefines();
 
-} // namespace Urho3D
+} // namespace ThirdEngine

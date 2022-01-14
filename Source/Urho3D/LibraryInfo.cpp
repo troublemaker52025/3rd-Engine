@@ -1,5 +1,5 @@
 //
-// Copyright (c) 2008-2021 the Urho3D project.
+// Copyright (c) 2008-2021 the 3rd-Engine project.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -25,7 +25,7 @@
 #include "LibraryInfo.h"
 #include "librevision.h"
 
-namespace Urho3D
+namespace ThirdEngine
 {
 
 const char* GetRevision() { return revision; }
@@ -55,4 +55,4 @@ const char* GetCompilerDefines()
         ;
 }
 
-} // namespace Urho3D
+} // namespace ThirdEngine

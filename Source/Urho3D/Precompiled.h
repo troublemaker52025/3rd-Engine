@@ -1,5 +1,5 @@
 //
-// Copyright (c) 2008-2021 the Urho3D project.
+// Copyright (c) 2021-2022 the 3rd-Engine project.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -20,6 +20,8 @@
 // THE SOFTWARE.
 //
 
+#pragma once
+
 #ifdef __cplusplus
 
 #ifndef URHO3D_PCH_INCLUDED
@@ -30,6 +32,6 @@
 //#include "Container/Sort.h"
 //#include "Container/Str.h"
 
-#endif
+#endif // URHO3D_PCH_INCLUDED
 
-#endif
+#endif // __cplusplus 

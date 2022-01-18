@@ -27,6 +27,7 @@
 #ifndef URHO3D_PCH_INCLUDED
 #define URHO3D_PCH_INCLUDED
 
+#include "Container/Allocator.h"
 //#include "Container/HashMap.h"
 //#include "Container/HashSet.h"
 //#include "Container/Sort.h"

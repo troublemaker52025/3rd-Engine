@@ -30,7 +30,7 @@
 
 #include <cstddef>
 
-namespace ThirdEngine
+namespace Urho3D
 {
 
 struct AllocatorBlock;
@@ -120,4 +120,4 @@ private:
     AllocatorBlock* allocator_;
 };
 
-} // namespace ThirdEngine
+} // namespace Urho3D

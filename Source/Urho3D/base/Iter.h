@@ -22,9 +22,9 @@
 
 #pragma once
 
-#include "Urho3dConfig.h"
+#include "../Urho3dConfig.h"
 
-namespace ThirdEngine
+namespace Urho3D
 {
 
 /// Random access iterator.
@@ -44,6 +44,9 @@ template <class T> struct RandomAccessIterator
 
     /// Point to the object.
     constexpr T* operator->() const { return ptr_; }
+
+    /// Dereference the object.
+    constexpr T& operator*() const { return *ptr_; }
 
     /// Preincrement the pointer.
     URHO_CPP14(constexpr) RandomAccessIterator<T>& operator++()
@@ -236,4 +239,4 @@ template <class T> struct RandomAccessConstIterator
     const T* ptr_;
 };
 
-} // namespace ThirdEngine
+} // namespace Urho3D

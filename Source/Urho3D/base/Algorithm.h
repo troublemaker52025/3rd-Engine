@@ -22,7 +22,7 @@
 
 #pragma once
 
-namespace ThirdEngine
+namespace Urho3D
 {
 
 /// Returns an iterator pointing to the first element in the range [first, last] that is not less than value.
@@ -71,4 +71,4 @@ TRandomAccessIterator UpperBound(TRandomAccessIterator first, TRandomAccessItera
     return first;
 }
 
-} // namespace ThirdEngine
+} // namespace Urho3D

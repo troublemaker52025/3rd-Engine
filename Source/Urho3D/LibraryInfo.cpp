@@ -21,11 +21,10 @@
 //
 
 #include "Precompiled.h"
-
 #include "LibraryInfo.h"
 #include "librevision.h"
 
-namespace ThirdEngine
+namespace Urho3D
 {
 
 const char* GetRevision() { return revision; }
@@ -55,4 +54,4 @@ const char* GetCompilerDefines()
         ;
 }
 
-} // namespace ThirdEngine
+} // namespace Urho3D

@@ -23,7 +23,7 @@
 #include "../Precompiled.h"
 #include "../DebugNew.h"
 
-namespace ThirdEngine
+namespace Urho3D
 {
 
 AllocatorBlock* AllocatorReserveBlock(AllocatorBlock* allocator, unsigned nodeSize, unsigned capacity)
@@ -57,12 +57,9 @@ AllocatorBlock* AllocatorReserveBlock(AllocatorBlock* allocator, unsigned nodeSi
         newNode->next_ = reinterpret_cast<AllocatorNode*>(nodePtr + sizeof(AllocatorNode) + nodeSize);
         nodePtr += sizeof(AllocatorNode) + nodeSize;
     }
-    // i == capacity - 1
-    {
-        auto* newNode = reinterpret_cast<AllocatorNode*>(nodePtr);
-        newNode->next_ = nullptr;
-    }
 
+    auto* newNode = reinterpret_cast<AllocatorNode*>(nodePtr);
+    newNode->next_ = nullptr;
     allocator->free_ = firstNewNode;
 
     return newBlock;
@@ -119,4 +116,4 @@ void AllocatorFree(AllocatorBlock* allocator, void* ptr)
     allocator->free_ = node;
 }
 
-} // namespace ThirdEngine 
+} // namespace Urho3D 

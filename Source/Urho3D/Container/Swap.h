@@ -22,19 +22,25 @@
 
 #pragma once
 
-#ifdef URHO3D_IS_BUILDING
-#include "Urho3D.h"
-#else
-#include <Urho3D/Urho3D.h>
-#endif
-
 namespace Urho3D
 {
 
-/// Return git description of the HEAD when building the library.
-URHO3D_API const char* GetRevision();
+class HashBase;
+class ListBase;
+class String;
+class VectorBase;
 
-/// Return baked-in compiler defines used when building the library.
-URHO3D_API const char* GetCompilerDefines();
+/// Swap two values.
+template <class T> inline void Swap(T& first, T& second)
+{
+    T temp = first;
+    first = second;
+    second = temp;
+}
+
+template <> URHO3D_API void Swap<String>(String& first, String& second);
+template <> URHO3D_API void Swap<VectorBase>(VectorBase& first, VectorBase& second);
+template <> URHO3D_API void Swap<ListBase>(ListBase& first, ListBase& second);
+template <> URHO3D_API void Swap<HashBase>(HashBase& first, HashBase& second);
 
 } // namespace Urho3D

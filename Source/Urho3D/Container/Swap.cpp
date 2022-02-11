@@ -20,21 +20,30 @@
 // THE SOFTWARE.
 //
 
-#pragma once
-
-#ifdef URHO3D_IS_BUILDING
-#include "Urho3D.h"
-#else
-#include <Urho3D/Urho3D.h>
-#endif
+#include "../Precompiled.h"
+#include "../Container/ListBase.h"
 
 namespace Urho3D
 {
 
-/// Return git description of the HEAD when building the library.
-URHO3D_API const char* GetRevision();
+template <> void Swap<String>(String& first, String& second)
+{
+    first.Swap(second);
+}
 
-/// Return baked-in compiler defines used when building the library.
-URHO3D_API const char* GetCompilerDefines();
+template <> void Swap<VectorBase>(VectorBase& first, VectorBase& second)
+{
+    first.Swap(second);
+}
+
+template <> void Swap<ListBase>(ListBase& first, ListBase& second)
+{
+    first.Swap(second);
+}
+
+template <> void Swap<HashBase>(HashBase& first, HashBase& second)
+{
+    first.Swap(second);
+}
 
 } // namespace Urho3D

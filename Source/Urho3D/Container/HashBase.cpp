@@ -20,21 +20,35 @@
 // THE SOFTWARE.
 //
 
-#pragma once
-
-#ifdef URHO3D_IS_BUILDING
-#include "Urho3D.h"
-#else
-#include <Urho3D/Urho3D.h>
-#endif
+#include "../Precompiled.h"
+#include "../DebugNew.h"
 
 namespace Urho3D
 {
 
-/// Return git description of the HEAD when building the library.
-URHO3D_API const char* GetRevision();
+void HashBase::AllocateBuckets(unsigned size, unsigned numBuckets)
+{
+    delete[] ptrs_;
 
-/// Return baked-in compiler defines used when building the library.
-URHO3D_API const char* GetCompilerDefines();
+    auto ptrs = new HashNodeBase* [numBuckets + 2];
+    auto* data = reinterpret_cast<unsigned*>(ptrs);
+    data[0] = size;
+    data[1] = numBuckets;
+    ptrs_ = ptrs;
+
+    ResetPtrs();
+}
+
+void HashBase::ResetPtrs()
+{
+    // Reset bucket pointers
+    if (!ptrs_)
+        return;
+
+    unsigned numBuckets = NumBuckets();
+    HashNodeBase** ptrs = Ptrs();
+    for (unsigned i = 0; i < numBuckets; ++i)
+        ptrs[i] = nullptr;
+}
 
 } // namespace Urho3D

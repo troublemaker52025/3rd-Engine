@@ -23,7 +23,7 @@
 #pragma once
 
 #include "../Container/Swap.h"
-#include "../Container/VectorBase.h"
+#include "../Base/Iter.h"
 
 namespace Urho3D
 {
